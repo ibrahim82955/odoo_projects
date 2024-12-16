@@ -1,0 +1,87 @@
+<odoo>
+  <data>
+<record id="model_name_view_tree" model="ir.ui.view">
+  <field name="name">model_name.view.tree</field>
+  <field name="model">hemareda.hemareda</field>
+  <field name="arch" type="xml">
+    <tree string="">
+      <field name="name" />
+      <field name="city" />
+      <field name="description" />
+      <field name="number" />
+
+    </tree>
+  </field>
+</record>
+
+    -------------------------------------------------------------------------------------
+      <record id="model_name_view_form" model="ir.ui.view">
+        <field name="name">model_name.view.form</field>
+        <field name="model">hemareda.hemareda</field>
+        <field name="arch" type="xml">
+          <form string="">
+            <sheet>
+              <group >
+              <group >
+                <field name="name" />
+                <field name="city" />
+              </group>
+              
+              <group>
+                <field name="number" />
+              </group> 
+            </group>
+            <notebook>
+              <page name="desc" >
+                <field name="description" />
+              </page>
+              <page name="3" >
+                <p>adasadsdasdsads</p>
+              </page>
+            </notebook>
+            </sheet>
+          </form>
+        </field>
+      </record>
+----------------------------------------------------------------------
+  <record id="hemareda_main_action" model="ir.actions.act_window">
+    <field name="name">Test action</field>
+    <field name="res_model">hemareda.hemareda</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face" >create new coures </p>
+
+</field>
+    </record>
+
+<!-- <menuitem> </menuitem> -->
+
+
+
+
+
+<!-- 
+<menuitem id="test_menu_root" name="Test">
+  <menuitem id="test_first_level_menu" name="First Level">
+      <menuitem id="test_model_menu_action" action="hemareda_main_action"/>
+  </menuitem>
+</menuitem>
+ -->
+
+<menuitem
+  id="first_action"
+  name="first"
+  sequence="-100"/>
+
+<menuitem
+  id="second_action"
+  name="second"
+  action="hemareda_main_action"
+  parent="first_action"
+  />
+  
+
+
+
+  </data>
+</odoo>
