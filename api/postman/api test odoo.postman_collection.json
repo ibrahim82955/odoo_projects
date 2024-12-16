@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "445cdbf5-817a-459e-9082-4eaa9615ea01",
+		"name": "api test odoo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32325019"
+	},
+	"item": [
+		{
+			"name": "localhost:8069/attentance",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8069/attentance",
+					"host": [
+						"localhost"
+					],
+					"port": "8069",
+					"path": [
+						"attentance"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
