@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="webpage_id" name="page">
+        <t t-call="website.layout">
+            <ul>
+               <div class="container">
+                <button>
+                    <a t-attf-href="/employee/attendance/create"> create attendance</a>
+                </button>
+                <button>
+                    <a t-attf-href="/employee/attendance/action2">check attendance</a>
+                </button>
+
+                    <style>
+                        table, th, td {
+                        border:1px solid black;
+                        }
+                    </style>
+                    <table style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>name</th>
+                                <th>CHECK IN</th>
+                                <th>CHECK OUT</th>
+                                <th>details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="hr_attentance" t-as="record">
+                                <tr>
+                                    <td t-esc="record.employee_id.name"/>
+                                    <td t-esc="record.check_in"/>
+                                    <td t-esc="record.check_out"/>
+                                    <td>
+                                        <a t-attf-href="/employee/attendance/details/{{ record.id }}">Details</a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </ul>
+        </t>
+    </template>
+    <template id="webpage_id_details" name="page">
+        <t t-call="website.layout">
+            <ul>
+                <div class="container">
+                    <style>
+                        table, th, td {
+                        border:1px solid black;
+                        }
+                    </style>
+                    <table style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>total hours</th>
+                                <th>phone</th>
+                                <th>mobile</th>
+                                <th>job</th>
+                                <th>email</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td t-esc="employee_work_hour"/>
+                                <td t-esc="phone"/>
+                                <td t-esc="mobile"/>
+
+                                <td t-esc="job"/>
+                                <td t-esc="email"/>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                    <a t-attf-href="/employee/attendance">back</a>
+                </div>
+            </ul>
+        </t>
+    </template>
+
+<template id="create_attendance" name="Create Attendance">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <div class="oe_structure">
+                <div class="container">
+                    <form role="form" method="post" action="/NEW/">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="form-group">
+                            <label for="employee_id" class="control-label">Employee ID</label>
+                            <select name="employee_id" class="form-control link-style">
+                                <t t-foreach="users" t-as="users">
+                                    <option t-esc="users.name" t-att-value="users.id"/>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="check_in" class="control-label">Check In</label>
+                            <input type="datetime-local" name="check_in" id="check_in" class="form-control" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="check_out" class="control-label">Check Out</label>
+                            <input type="datetime-local" name="check_out" id="check_out" class="form-control" required="required"/>
+                        </div>
+                        <div class="clearfix oe_login_buttons">
+                            <button type="submit" class="btn btn-primary pull-left">Create Attendance</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+
+
+
+</odoo>

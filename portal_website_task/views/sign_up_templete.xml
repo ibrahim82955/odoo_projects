@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="test_tree_id" model="ir.ui.view">
+            <field name="name">test</field>
+            <field name="model">employ_attentance</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="test_form_id" model="ir.ui.view">
+            <field name="name">test</field>
+            <field name="model">employ_attentance</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="om_hospital_patient_action" model="ir.actions.act_window">
+            <field name="name">test</field>
+            <field name="res_model">employ_attentance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">add new patient</p>
+            </field>
+        </record>
+
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="tese_id" name="test" action="om_hospital_patient_action" sequence="0"/>
+
+    </data>
+</odoo>

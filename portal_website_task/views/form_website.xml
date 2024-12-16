@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="menu_form12" model="website.menu">
+            <field name="name">attendant</field>
+            <field name="url">/</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">10</field>
+        </record>
+
+        <template id="create_attendance" name="create attendance">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure">
+                        <div class="container">
+                            <form role="form"  action="/create/webpatient" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div class="form-group">
+                                    <label for="employee_id" class="control-label">employee_id</label>
+                                    <select name="employee_id" class="form-control link-style">
+                                        <t t-foreach="employee_id" t-as="id">
+                                            <option t-esc="employee_id.name" t-att-value="employee_id.id"/>
+                                        </t>
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="check_in" class="control-label">check_in</label>
+                                    <input type="check_in" name="check_in" t-att-value="check_in" id="check_in"
+                                           class="form-control" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="check_out" class="control-label">check_out</label>
+                                    <input type="check_out" name="check_out" t-att-value="check_out" id="check_out"
+                                           class="form-control" required="required"/>
+                                </div>
+                                <div class="clearfix oe_login_buttons">
+                                    <button type="submit" class="btn btn-primary pull-left">Create Patient</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <record id="patient_thanks" model="website.page">
+            <field name="name">Thanks</field>
+            <field name="type">qweb</field>
+            <field name="url">/patient-thank-you</field>
+            <field name="website_published">True</field>
+            <field name="key">om_hospital.patient_thanks</field>
+            <field name="arch" type="xml">
+                <t name="Thanks" t-name="om_hospital.patient_thanks">
+                    <t t-call="website.layout">
+                        <div id="wrap">
+                            <div class="container">
+                                <h1>Thanks!</h1>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="alert alert-success" role="status">
+                                            The Patient has been Created successfully.
+                                        </div>
+                                        <p>
+                                            Visit Hospital At ANy Time
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
