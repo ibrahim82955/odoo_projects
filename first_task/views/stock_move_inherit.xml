@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1" >
+
+
+        <record id="stock_view_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock_move_inht</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref='stock.view_picking_form'/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+
+                    <field name='stock_move_inherit_dimention' string='dimension'  readonly='0' 
+                    />
+
+                </xpath>
+               
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
