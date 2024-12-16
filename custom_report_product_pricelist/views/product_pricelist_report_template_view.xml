@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product.report_pricelist_page">
+        <div class="container bg-white p-4 my-4">
+            <div class="row my-3">
+                <div class="col-12" t-if="is_visible_title">
+                    <h2 t-if="is_html_type">
+                        Pricelist:
+                        <a href="#" class="o_action" data-model="product.pricelist" t-att-data-res-id="pricelist.id">
+                            <t t-esc="pricelist.display_name"/>
+                        </a>
+                    </h2>
+                    <h2 t-else="">
+                        Pricelist: <t t-esc="pricelist.display_name"/>
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div t-att-class="'text-center' + (' offset-4' if is_html_type else ' offset-3')">
+                    <strong>عرض أسعار الشركة العربية للتوريدات و الاستيراد</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-sm">
+                        <thead>
+                            <t t-set="seq" t-value="1"/>
+
+                            <tr>
+                                <th class="text-center">
+                                    <span>م</span>
+                                </th>
+                                <th>Description</th>
+                                <th>الصنف</th>
+                                <th>Origin</th>
+                                <th>Price</th>
+                                <th>Weight</th>
+                                <th>Internal Reference</th>
+                                <th>Barcode</th>
+                                <th groups="uom.group_uom">UoM</th>
+                                <th>Brand</th>
+
+                                <!-- <t t-foreach="quantities" t-as="qty">
+                                    <th class="text-end">
+                                        <t t-esc="qty"/>
+                                    </th>
+                                </t> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="products" t-as="product">
+                                <tr>
+                                    <!-- م -->
+                                    <td name="seq" style="width:2%">
+                                        <span t-esc="seq"/>
+                                        <t t-set="seq" t-value="seq+1"/>
+                                    </td>
+                                    <!-- description -->
+                                    <td>
+                                        <t t-if="product.get('description_sale')">
+                                            <t t-esc="product['description_sale']"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t>&#160;</t>
+                                        </t>
+                                    </td>
+                                    <!-- الصنف -->
+                                    <td t-att-class="is_product_tmpl and 'fw-bold' or None">
+                                        <a t-if="is_html_type" href="#" class="o_action" t-att-data-model="is_product_tmpl and 'product.template' or 'product.product'" t-att-data-res-id="product['id']">
+                                            <t t-esc="product['name']"/>
+                                        </a>
+                                        <t t-else="">
+                                            <t t-esc="product['name']"/>
+                                        </t>
+                                    </td>
+                                    <!--country_id-->
+                                    <td >
+                                        <!-- <t t-esc="product['country_id']"/> -->
+                                        <t>&#160;</t>
+
+                                    </td>
+                                    <!--list_price-->
+                                    <td >
+                                        <t t-esc="product['list_price']"/>
+                                    </td>
+                                    <!--Weight_for_Pricelist_Reports -->
+                                    <td>
+                                        <!-- <t t-if="product.get('Weight_for_Pricelist_Reports')">
+                                            <t t-esc="product['Weight_for_Pricelist_Reports']"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t>&#160;</t>
+                                        </t>
+                                     -->
+                                        <t>&#160;</t>
+                                    </td>
+                                    <!-- Internal Reference -->
+                                    <td>
+                                        <t t-esc="product['default_code']"/>
+                                    </td>
+                                    <!-- Barcode -->
+                                    <td>
+                                        <t t-if="product.get('Barcode')">
+                                            <t t-esc="product['Barcode']"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t>&#160;</t>
+                                        </t>
+                                        <t t-esc="product['Barcode']"/>
+                                    </td>
+                                    <td groups="uom.group_uom">
+                                        <t t-esc="product['uom']"/>
+                                    </td>
+                                    <td >
+                                        <t t-esc="product['Brand']"/>
+                                    </td>
+                                    <!-- <t t-foreach="quantities" t-as="qty">
+                                        <td class="text-end">
+                                            <t t-esc="product['price'][qty]" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/>
+                                        </td>
+                                    </t> -->
+                                </tr>
+                                <!-- <t t-if="is_product_tmpl and 'variants' in product">
+                                    <tr t-foreach="product['variants']" t-as="variant">
+                                        <td>
+                                            <a t-if="is_html_type" href="#" class="o_action ms-4" data-model="product.product" t-att-data-res-id="variant['id']">
+                                                <t t-esc="variant['name']"/>
+                                            </a>
+                                            <span t-else="" class="ms-4" t-esc="variant['name']"/>
+                                        </td>
+                                        <td groups="uom.group_uom">
+                                            <t t-esc="product['uom']"/>
+                                        </td>
+                                        <t t-foreach="quantities" t-as="qty">
+                                            <td>
+                                                <t t-esc="variant['price'][qty]" t-options='{"widget": "monetary", "display_currency": pricelist.currency_id}'/>
+                                            </td>
+                                        </t>
+                                    </tr> -->
+
+
+                            </t>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="product.report_pricelist">
+
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div class="header" style="text-align:center;">
+
+                    <div class="row">
+
+
+                        <div class="col-6 mb-4">
+                            <center>
+                                <table class="table-borderless" border="0" style="text-align:center;width:100%;">
+                                    <tr>
+                                        <td style="width:80%;"/>
+                                        <td style="width:20%;">
+                                            <img t-if="logo" t-att-src="image_data_uri(logo)" alt="Logo" style="width:160px;height:80px;"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </div>
+                        <div class="col-6 mb-4" >
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <t t-esc="'السادة'" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="'السادة'" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <t t-esc="'عناية الأستاذ'"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="'عناية الأستاذ'"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <t t-esc="'تاريخ'" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="'تاريخ'" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <t t-esc="'فترة السداد'"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="'فترة السداد'"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <t t-call="product.report_pricelist_page"/>
+            </div>
+            <p style="page-break-before:always;"></p>
+        </t>
+    </template>
+</odoo>
