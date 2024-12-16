@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="auth_signup_fields_extend" inherit_id="auth_signup.fields" name="campos de registro extendido">
+            <xpath expr="//div[hasclass('field-confirm_password')]" position="after">
+                <div class="form-group field-national_id" required="1">
+                    <label for="national_id" class="control-label">national_id</label>
+                    <input type="Char" name="national_id" t-att-value="national_id" id="national_id" class="form-control" t-att-readonly="'readonly' if only_passwords else None"
+	                t-att-autofocus="'autofocus' if login and not only_passwords else None" />
+                </div>
+
+            </xpath>
+
+
+        </template>
+
+
+    </data>
+</odoo>
