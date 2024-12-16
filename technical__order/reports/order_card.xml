@@ -1,0 +1,117 @@
+<odoo>
+
+    <record id="action_report_building" model="ir.actions.report">
+        <field name="name">Building</field>
+        <field name="model">technical_order.orders</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">technical__order.order_report</field>
+        <field name="report_file">technical__order.order_report</field>
+        <field name="binding_model_id" ref="model_technical_order_orders"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="order_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+
+                        <div class="text-center mb-4">
+                            <span style="font-size:40px;font-weight:bold" t-field="doc.Sequences"/>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Request_name:</strong>
+                                <span t-field="doc.Request_name"/>
+                                <br/>
+                                <strong>Requested_by:</strong>
+                                <span t-field="doc.Requested_by"/>
+                                <br/>
+                                <strong>state:</strong>
+                                <span t-field="doc.state"/>
+                                <br/>
+                                <strong>total_price:</strong>
+                                <span t-field="doc.total_price"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>customer:</strong>
+                                <span t-field="doc.customer"/>
+                                <br/>
+                                <strong>start_date:</strong>
+                                <span t-field="doc.start_date"/>
+                                <br/>
+                                <strong>End_Date:</strong>
+                                <span t-field="doc.End_Date"/>
+
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+
+                        <table class="table table-sm o_main_table" style="direction:ltr;width:100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <strong>product</strong>
+                                    </th>
+                                    <th>
+                                        <strong>discription</strong>
+                                    </th>
+                                    <th>
+                                        <strong>price</strong>
+                                    </th>
+                                    <th>
+                                        <strong>total</strong>
+                                    </th>
+                                    <th>
+                                        <strong>quantity</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="seq" t-value="0"/>
+                                <tr t-foreach="doc.OrderLine_ids"  t-as="line">
+                                    <t t-set="seq" t-value="seq+1"/>
+                                    <td style="width:10%">
+                                        <span t-esc="seq"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.description"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.quantity"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.price"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.price"/>
+                                    </td>
+                                    
+                                    <td>
+                                        <span t-field="line.total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+                        <br/>
+                        
+
+
+                        <br/>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

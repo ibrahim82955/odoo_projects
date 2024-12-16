@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+    
+        
+    
+    
+    
+
+<!-- inhiret view re.parent -->
+<record id="res_partner_hema_inherit" model="ir.ui.view">
+    <field name="name">respartner</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='function']" position="after">
+        
+            <field name="set_the_value" string="is_tech_offer"/>
+        
+      </xpath>
+
+    </field>
+</record>
+
+
+</data>
+</odoo>

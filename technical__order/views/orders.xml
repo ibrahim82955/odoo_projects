@@ -1,0 +1,191 @@
+<odoo>
+  <data>
+<!-- product_tree
+    <record id="product_tree_view" model="ir.ui.view">
+      <field name="name">products</field>
+      <field name="model">productt.productt</field>
+      <field name="arch" type="xml">
+        <tree string="product">
+          <field name="name" />
+          <field name="lst_price" />
+        </tree>
+      </field>
+    </record> -->
+
+<!-- ......... product_details_tree ........... -->
+    <record id="order_details_tree_view" model="ir.ui.view">
+      <field name="name">order_details</field>
+      <field name="model">technical_order.line</field>
+      <field name="arch" type="xml">
+        <tree string=" " editable="bottom">
+          <field name="product_id" />
+          <field name="description" />
+          <field name="price" />
+          <field name="total" />
+          <field name="quantity" />
+          <field name="remining_order" />
+          <field name='order_quantity' />
+          
+        </tree>
+      </field>
+    </record>
+
+<!-- .......  orders_tree ................  -->
+    <record id="orders_tree_view" model="ir.ui.view">
+      <field name="name">orders</field>
+      <field name="model">technical_order.orders</field>
+      <field name="arch" type="xml">
+        <tree  decoration-info="state == 'draft'" 
+        decoration-danger="state == 'cancel' or state == 'reject'"
+        decoration-success="state == 'approved'" 
+        decoration-muted="state == 'to_be_approved'" >
+          <field name="Sequences"/>
+          <field name="Request_name"  />
+          <field name="Requested_by"  widget="many2one_avatar_user"/>
+          <field name="customer" widget="many2one_avatar"/>
+          <field name="start_date"/>
+          <field name="End_Date"/>
+          <field name="state" widget="selection"/>
+          <field name="total_price"/>
+        </tree>
+      </field>
+    </record>
+
+
+
+
+
+
+<!--                view of orders                                  -->
+    <record id="order_view" model="ir.ui.view">
+      <field name="name">orders</field>
+      <field name="model">technical_order.orders</field>
+      <field name="arch" type="xml">
+        <form string="orders">
+          <header>
+            <!-- statusbar button -->
+            <button string=" create sale_order" name="create_sale_order" type="object"
+              class="oe_highlight" attrs="{'invisible':['|',('state','!=','approved'),('check','=','false')]}" />
+            <button string="to_be_approved" name="action_to_be_approved" type="object"
+              class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}" />
+            <button string="approved" name="action_approved" type="object" class="oe_highlight"
+              attrs="{'invisible':[('state','!=','to_be_approved')]}" />
+            <button string="reject" name="%(technical__order.rejection_reason_wizard)d" type="action" class="oe_highlight"
+              attrs="{'invisible':[('state','!=','to_be_approved')]}" />
+            <button string="cancel" name="action_cancel" type="object" class="oe_highlight"
+              attrs="{'invisible':[('state','!=','draft')]}" />
+            <button string="Reset_to_draft" name="action_reset" type="object" class="oe_highlight"
+              attrs="{'invisible':[('state','!=','cancel')]}" />
+            <field name="state" widget="statusbar"
+              statusbar_visible="draft,to_be_approved,approved,reject,cancel,reset" />
+          <!--...............................................................-->
+            </header>
+          <sheet>
+              <div class="oe_button_box" name="button_box">
+                  <button name="action_open_units"
+                          type="object"
+                          class="oe_stat_button"
+                          icon="fa-pencil-square-o"
+                          attrs="{'invisible': [('order_count', '=', 0)]}">
+                      <div class="o_field_widget o_stat_info">
+                          <field name="order_count"/>
+                          <span class="o_stat_text">Orders</span>
+                      </div>
+                  </button>
+              </div>
+          
+            <group>
+              <group>
+                <div>
+                  <h1>
+                    <field name="Sequences" />
+                  </h1>
+                </div>
+              </group>
+              <group>
+              </group>
+              <group>
+                <field name="Request_name"
+                  attrs="{'readonly': [('state', 'in', ('approved', 'reject', 'cancel'))]}" />
+                <field name="Requested_by" widget="many2one_avatar_user"
+                  attrs="{'readonly': [('state', 'in', ('approved', 'reject', 'cancel'))]}" />
+                <field name="rejection_reason"
+                  attrs="{'invisible': [('state', 'not in', ('reject'))]}" />
+                  <field name="check" />
+
+              </group>
+              <group>
+                <field name="customer" widget="many2one_avatar"
+                  attrs="{'readonly': [('state', 'in', ('approved', 'reject', 'cancel'))]}" />
+                <field name="start_date"
+                  attrs="{'readonly': [('state', 'in', ('approved', 'reject', 'cancel'))]}" />
+                <field name="End_Date"
+                  attrs="{'readonly': [('state', 'in', ('approved', 'reject', 'cancel'))]}" />
+                <field name="total_price"
+                  attrs="{'readonly': [('state', 'in', ('approved', 'reject', 'cancel'))]}" />
+
+              </group>
+
+            </group>
+            <notebook>
+              <page name="first" string="OrderLine">
+                <group>
+
+
+                  <field name="OrderLine_ids" widget="one2many_list" attrs="{'readonly': [('state', 'in', ( 'reject', 'cancel'))]}" />
+                    
+                  
+
+
+                </group>
+              </page>
+            </notebook>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" />
+            <field name="activity_ids" widget="mail_activity" />
+            <field name="message_ids" widget="mail_thread" />
+          </div>
+
+
+        </form>
+      </field>
+    </record>
+
+
+    <!-- <record id="Order_action" model="ir.actions.act_window">
+      <field name="name">O</field>
+      <field name="res_model">technical_order.line</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="context">{'default_remining_quantity_order': 'quantity' , 'search_default_more_5': 0}</field>
+      <field name="view_mode">tree,form</field>
+    </record> -->
+<!-- technical_order_action  -->
+    <record id="Technical_Order_action" model="ir.actions.act_window">
+      <field name="name">Orders</field>
+      <field name="res_model">technical_order.orders</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+<!-- product_action -->
+    <!-- <record id="product_action" model="ir.actions.act_window">
+      <field name="name">product list</field>
+      <field name="res_model">productt.productt</field>
+      <field name="context">{'default_lst_price': 1}</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">tree,form</field>
+    </record> -->
+
+<!-- Store Orders menu -->
+    <menuitem id="Store_Orders_menu" name="Store Orders menu" />
+    
+<!--   orders_menu          -->
+    <menuitem id="orders" name="orders" parent="Store_Orders_menu" action="Technical_Order_action" />
+    
+<!-- products_menu -->
+    <!-- <menuitem id="products" name="products" parent="Store_Orders_menu" action="product_action" /> -->
+
+
+  </data>
+</odoo>

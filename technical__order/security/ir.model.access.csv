@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_technical_order_orders,technical_order.orders,model_technical_order_orders,base.group_user,1,1,1,1
+access_technical_order_line,technical_order_line,model_technical_order_line,base.group_user,1,1,1,1
+access_technical__order_rejection_reason,technical__order_rejection_reason,model_technical__order_rejection_reason,base.group_user,1,1,1,1
